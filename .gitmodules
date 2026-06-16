@@ -1,0 +1,9 @@
+[submodule "e22900t22"]
+	path = e22900t22
+	url = https://github.com/matthewgream/e22900t22
+[submodule "hostmon"]
+	path = hostmon
+	url = https://github.com/matthewgream/hostmon.git
+[submodule "mqtt-deployer"]
+	path = mqtt-deployer
+	url = https://github.com/matthewgream/mqtt-deployer.git
