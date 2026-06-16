@@ -6,11 +6,11 @@ truth rather than copies scattered through each consumer.
 
 Each entry is its own independently-controlled upstream repository:
 
-| Submodule       | Upstream                                       | Usage                                                       |
-| --------------- | ---------------------------------------------- | ----------------------------------------------------------- |
-| `e22900t22`     | `github.com/matthewgream/e22900t22`            | iotdata-library (examples), iotdata-machine (apps/gateways) |
-| `hostmon`       | `github.com/matthewgream/hostmon`              | iotdata-machine (image)                                     |
-| `mqtt-deployer` | `github.com/matthewgream/mqtt-deployer`        | iotdata-machine (image)                                     |
+| Submodule       | Upstream                                       | Usage                                                      |
+| --------------- | ---------------------------------------------- | ---------------------------------------------------------- |
+| `e22900t22`     | `github.com/matthewgream/e22900t22`            | iotdata-library (examples), iotdata-machine (apps/gateway) |
+| `hostmon`       | `github.com/matthewgream/hostmon`              | iotdata-machine (image)                                    |
+| `mqtt-deployer` | `github.com/matthewgream/mqtt-deployer`        | iotdata-machine (image)                                    |
 
 ## Clone
 
