@@ -17,15 +17,18 @@ Each entry is its own independently-controlled upstream repository:
 ```sh
 git clone --recurse-submodules https://github.com/iotdata-network/iotdata-depend
 # or, after a plain clone:
-git submodule update --init --recursive
+git submodule update --init --recursive    # == make init
 ```
 
-## Update a submodule to its latest upstream
+## Update submodules to their latest upstream
 
 ```sh
-git -C <submodule> pull origin main      # move the submodule's checkout
-git add <submodule> && git commit        # record the new pinned commit here
+make bump        # move every submodule to upstream HEAD and commit the new pins
+# or step by step:
+make update      # move the checkouts only
+make status      # review what changed
+make commit      # record the new pins
 ```
 
 The commit pinned in this superproject is the version the rest of the system builds
-against; bump it deliberately.
+against; bump it deliberately. Run `make` with no target for the full list.
