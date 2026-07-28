@@ -7,3 +7,7 @@
 [submodule "mqtt-deployer"]
 	path = mqtt-deployer
 	url = https://github.com/matthewgream/mqtt-deployer.git
+[submodule "rak3272"]
+	path = rak3272
+	url = https://github.com/matthewgream/Rak3272
+	branch = port_linux
