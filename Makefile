@@ -5,7 +5,7 @@
 SUBMODULES := $(shell git config --file .gitmodules --get-regexp '\.path$$' | awk '{print $$2}')
 
 .DEFAULT_GOAL := help
-.PHONY: help init status update commit bump sync foreach _assert-clean
+.PHONY: help init status attach update commit bump sync foreach _assert-clean
 
 # Override the pin commit message:  make bump MSG="..."
 MSG ?= update submodule pins
@@ -22,6 +22,39 @@ init: ## Populate submodules after a fresh clone (init + checkout pinned commits
 
 status: ## Show each submodule's pinned commit and working-tree state
 	@git submodule status --recursive
+
+# Submodules check out in DETACHED HEAD — that is normal for `submodule update`, and
+# it is also the trap: commits made there sit on no branch, so `git push` has nothing
+# to push and the pin cannot be published. (A `branch =` key in .gitmodules does NOT
+# help: the checkout still lands detached on the remote-tracking ref.) Run this BEFORE
+# editing inside a submodule, or afterwards to rescue commits already stranded.
+# It refuses rather than guesses when the branch is not an ancestor of HEAD, because
+# `checkout -B` force-resets and would otherwise discard commits.
+attach: ## Re-attach detached submodules to their branch (run before editing in one)
+	@for s in $(SUBMODULES); do \
+	  [ -e "$$s/.git" ] || { echo "  $$s: not initialised, skipping (try 'make init')"; continue; }; \
+	  cur=$$(git -C "$$s" symbolic-ref --short -q HEAD || true); \
+	  if [ -n "$$cur" ]; then echo "  $$s: already on '$$cur'"; continue; fi; \
+	  n=$$(git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$$' "^$$s$$" 2>/dev/null | sed 's/^submodule\.//; s/\.path$$//'); \
+	  b=$$(git config -f .gitmodules --get "submodule.$$n.branch" 2>/dev/null || true); \
+	  [ -n "$$b" ] || b=$$(git -C "$$s" symbolic-ref --short -q refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||'); \
+	  [ -n "$$b" ] || b=main; \
+	  if ! git -C "$$s" show-ref --verify --quiet "refs/heads/$$b"; then \
+	    git -C "$$s" checkout -q -b "$$b" && echo "  $$s: created '$$b' at HEAD and checked out"; \
+	  elif git -C "$$s" merge-base --is-ancestor "refs/heads/$$b" HEAD; then \
+	    if [ "$$(git -C "$$s" rev-parse "refs/heads/$$b")" = "$$(git -C "$$s" rev-parse HEAD)" ]; then \
+	      git -C "$$s" checkout -q "$$b" && echo "  $$s: attached to '$$b' (already at HEAD)"; \
+	    else \
+	      git -C "$$s" checkout -q -B "$$b" HEAD && echo "  $$s: fast-forwarded '$$b' to HEAD and attached — commits rescued, now 'git -C $$s push'"; \
+	    fi; \
+	  else \
+	    echo "  $$s: REFUSED — '$$b' ($$(git -C "$$s" rev-parse --short refs/heads/$$b)) is not an ancestor of HEAD ($$(git -C "$$s" rev-parse --short HEAD))."; \
+	    echo "        Attaching would discard commits. Resolve by hand: git -C $$s log --oneline $$b..HEAD"; \
+	    continue; \
+	  fi; \
+	  git -C "$$s" rev-parse --verify -q "refs/remotes/origin/$$b" >/dev/null 2>&1 && \
+	    git -C "$$s" branch -q --set-upstream-to="origin/$$b" "$$b" >/dev/null 2>&1 || true; \
+	done
 
 # Guard: a submodule must be committed AND pushed before the parent pins it. Otherwise
 # `update`/`bump` orphan uncommitted edits (via `submodule update --remote`) or pin a SHA
