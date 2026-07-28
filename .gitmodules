@@ -11,3 +11,6 @@
 	path = rak3272
 	url = https://github.com/matthewgream/Rak3272
 	branch = port_linux
+[submodule "wm1302"]
+	path = wm1302
+	url = https://github.com/matthewgream/wm1302
