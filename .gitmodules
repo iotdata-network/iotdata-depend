@@ -17,3 +17,6 @@
 [submodule "blackbox"]
 	path = blackbox
 	url = https://github.com/matthewgream/blackbox
+[submodule "dialout"]
+	path = dialout
+	url = https://github.com/matthewgream/dialout

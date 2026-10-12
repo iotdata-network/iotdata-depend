@@ -9,6 +9,7 @@ Each entry is its own independently-controlled upstream repository:
 | Submodule       | Upstream                                       | Usage                                                      |
 | --------------- | ---------------------------------------------- | ---------------------------------------------------------- |
 | `wm1302`        | `github.com/matthewgream/wm1302`               | |
+| `dialout`       | `github.com/matthewgream/dialout`              | host-side ops: reverse-tunnel access to remote boxes        |
 | `rak3272`       | `github.com/matthewgream/Rak3272`              | |
 | `e22900t22`     | `github.com/matthewgream/e22900t22`            | iotdata-library (examples), iotdata-machine (apps/gateway) |
 | `hostmon`       | `github.com/matthewgream/hostmon`              | iotdata-machine (image)                                    |
