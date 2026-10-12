@@ -9,3 +9,5 @@
 IOTDATA_SRC_DEPEND_E22XXXTXX ?= $(IOTDATA_SRC_DEPEND)/e22900t22/include
 IOTDATA_SRC_DEPEND_RAK3272   ?= $(IOTDATA_SRC_DEPEND)/rak3272/include
 IOTDATA_SRC_DEPEND_BLACKBOX  ?= $(IOTDATA_SRC_DEPEND)/blackbox/include
+# HPatchLite's applier: headers AND one .c, so projects add the source as well as the path
+IOTDATA_SRC_DEPEND_HPATCH    ?= $(IOTDATA_SRC_DEPEND)/hpatchlite
