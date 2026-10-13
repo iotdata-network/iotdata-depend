@@ -1,7 +1,7 @@
 # hpatchlite
 
 HPatchLite's patch applier: the device half of the DELTA form in
-`iotdata-common/include/iotdata_node_content_ota.h`. Four files, MIT licence, no dependencies
+`iotdata-platform/include/iotdata_node_content_ota.h`. Four files, MIT licence, no dependencies
 beyond the standard headers.
 
 ## Why it is vendored rather than a submodule
@@ -46,4 +46,4 @@ for the `hdiffz` patches previously in the release tree and 9600 for esp_delta_o
 ## Local changes
 
 None. The four files are byte-for-byte upstream; everything we add lives in
-`iotdata-common/include/device/d_module_patch_esp32.h` and its linux counterpart.
+`iotdata-platform/include/device/d_module_patch_esp32.h` and its linux counterpart.

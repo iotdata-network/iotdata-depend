@@ -1,7 +1,7 @@
 # config.mk — iotdata-depend include paths (the vendored driver submodules).
 #
-# Include AFTER iotdata-common/make/config.mk, which defines IOTDATA_SRC_DEPEND:
-#   include $(IOTDATA_SRC)/iotdata-common/make/config.mk
+# Include AFTER iotdata-platform/make/config.mk, which defines IOTDATA_SRC_DEPEND:
+#   include $(IOTDATA_SRC)/iotdata-platform/make/config.mk
 #   include $(IOTDATA_SRC)/iotdata-depend/make/config.mk
 #
 # Only submodules with a public include/ dir are listed.
